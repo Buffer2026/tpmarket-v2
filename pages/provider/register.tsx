@@ -54,7 +54,13 @@ export default function ProviderRegister() {
     setLoading(true);
     setError('');
 
-    const { error } = await supabase.auth.signInWithOtp({ email: contactInfo });
+    // THIS IS THE NEW PART: It tells Supabase exactly where to send the user
+    const { error } = await supabase.auth.signInWithOtp({ 
+      email: contactInfo,
+      options: {
+        emailRedirectTo: 'https://www.tpmarket.ng/provider/register'
+      }
+    });
     
     if (error) {
       setError(error.message);
